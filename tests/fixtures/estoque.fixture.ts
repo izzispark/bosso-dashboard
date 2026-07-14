@@ -4,27 +4,32 @@ export interface EstoqueRow {
   code: string
   name: string
   qty: number
-  cost: number
   unit: string
+  cost: number
+  unitCost: number
   value: number
+  alert: boolean
 }
 
+// Formato REAL do CSV exportado pelo BeerSales:
+// Empresa,Código,Produto,Qtde.,Un.,Qtde. Entrega,Un. Entrega,Estoque Mínimo,Custo,Custo Médio
+const HEADER = 'Empresa,Código,Produto,Qtde.,Un.,Qtde. Entrega,Un. Entrega,Estoque Mínimo,Custo,Custo Médio'
+
 export function makeEstoqueRow(overrides?: Partial<EstoqueRow>): EstoqueRow {
-  const base: EstoqueRow = {
-    code: faker.string.alphanumeric(6).toUpperCase(),
-    name: faker.commerce.productName(),
-    qty: faker.number.int({ min: 1, max: 50000 }),
-    cost: parseFloat(faker.commerce.price({ min: 0.5, max: 500 })),
-    unit: faker.helpers.arrayElement(['UN', 'KG', 'CX', 'LT', 'PC']),
-    value: 0, // will be overridden if provided
-  }
-  return { ...base, ...overrides }
+  const code = overrides?.code ?? faker.string.alphanumeric(6).toUpperCase()
+  const name = overrides?.name ?? faker.commerce.productName()
+  const qty = overrides?.qty ?? faker.number.int({ min: 1, max: 50000 })
+  const unit = overrides?.unit ?? faker.helpers.arrayElement(['UN', 'KG', 'CX', 'LT', 'PC'])
+  const cost = overrides?.cost ?? parseFloat(faker.commerce.price({ min: 0.5, max: 500 }))
+  const unitCost = overrides?.unitCost ?? cost / Math.max(qty, 1)
+  const value = overrides?.value ?? cost
+  return { code, name, qty, unit, cost, unitCost, value, alert: false, ...overrides }
 }
 
 export function makeEstoqueCsv(rows: EstoqueRow[]): string {
-  const header = 'code,name,qty,cost,unit'
-  const lines = rows.map(
-    (r) => `${r.code},${r.name},${r.qty},${r.cost},${r.unit}`
+  // Formato: Empresa,Código,Produto,Qtde.,Un.,Qtde. Entrega,Un. Entrega,Estoque Mínimo,Custo,Custo Médio
+  const dataRows = rows.map(r =>
+    `EMPÓRIO GERMANIA VINHEDO,${r.code},${r.name},${r.qty},${r.unit},,,0,${r.cost},${r.unitCost}`
   )
-  return [header, ...lines].join('\n')
+  return [HEADER, ...dataRows].join('\n')
 }
