@@ -9,3 +9,5 @@ playwright-report/
 test-results/
 coverage/
 .DS_Store
+# TanStack Start gera HTML dinamicamente; index.html estático sombreia o entry
+index.html

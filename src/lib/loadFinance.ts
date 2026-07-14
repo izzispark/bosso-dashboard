@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 
-export interface FinanceRecord {
+export type FinanceRecord = {
+  id?: string | number
   cliente?: string
   descricao?: string
   fornecedor?: string
@@ -8,10 +9,12 @@ export interface FinanceRecord {
   vencimento: string
   valor: number
   dias?: number
-  status: 'EM ABERTO' | 'PAGO' | 'VENCIDA'
+  status: 'EM ABERTO' | 'PAGO' | 'VENCIDA' | 'VENCIDO' | string
+  pago?: number
+  forma?: string
 }
 
-export interface FinanceData {
+export type FinanceData = {
   receber: FinanceRecord[]
   pagar: FinanceRecord[]
 }
