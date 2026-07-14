@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+const browser=await chromium.launch({headless:true});
+const page=await browser.newPage({ viewport:{width:1440,height:1000} });
+const errors=[]; const failed=[];
+page.on('pageerror',e=>errors.push(e.message));
+page.on('console',m=>{if(m.type()==='error') errors.push('console '+m.text())});
+page.on('requestfailed',r=>failed.push(`${r.url()} :: ${r.failure()?.errorText}`));
+const url='https://dashboard.bosso.izzispark.cloud/';
+const resp=await page.goto(url,{waitUntil:'networkidle',timeout:30000});
+await page.screenshot({path:'/tmp/dashboard-e2e.png',fullPage:true});
+const stock=await page.getByText('Estoque em foco.').isVisible();
+await page.getByText('Contas a Receber').click(); await page.waitForTimeout(500);
+const recv=await page.getByText('Contas a Receber — Cobranças').isVisible(); const recvRows=await page.locator('[data-table-library_tr-body]').count();
+await page.getByText('← Estoque').click(); await page.waitForTimeout(300);
+await page.getByText('Contas a Pagar').click(); await page.waitForTimeout(500);
+const pay=await page.getByText('Contas a Pagar — Saida_Analitica').isVisible(); const payRows=await page.locator('[data-table-library_tr-body]').count();
+console.log(JSON.stringify({httpStatus:resp?.status(),stock,recv,recvRows,pay,payRows,errors,failed,url:page.url()}));
+await browser.close();
