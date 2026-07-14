@@ -1,10 +1,10 @@
 services:
-  estoque-dashboard:
+  bosso-dashboard:
     build:
       context: .
       dockerfile: Dockerfile
-    image: estoque-dashboard:latest
-    container_name: estoque-dashboard
+    image: estoque-dashboard:v2
+    container_name: bosso-dashboard
     restart: always
     networks:
       - komodo_default
@@ -18,11 +18,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=komodo_default"
-      - "traefik.http.routers.estoque-dashboard.rule=Host(`dashboard.bosso.izzispark.cloud`)"
-      - "traefik.http.routers.estoque-dashboard.entrypoints=websecure"
-      - "traefik.http.routers.estoque-dashboard.tls=true"
-      - "traefik.http.routers.estoque-dashboard.tls.certresolver=letsencrypt"
-      - "traefik.http.services.estoque-dashboard.loadbalancer.server.port=3000"
+      - "traefik.http.routers.bosso-dashboard.rule=Host(`dashboard.bosso.izzispark.cloud`)"
+      - "traefik.http.routers.bosso-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.bosso-dashboard.tls=true"
+      - "traefik.http.routers.bosso-dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.services.bosso-dashboard.loadbalancer.server.port=3000"
 
 networks:
   komodo_default:

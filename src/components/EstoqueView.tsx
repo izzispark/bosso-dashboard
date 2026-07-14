@@ -106,7 +106,7 @@ export function EstoqueView() {
           <div className="logo">B</div>
           <div>
             <b>bosso</b>
-            <span>OPERATIONS</span>
+            <span>PRODUÇÕES</span>
           </div>
         </div>
         <div className="side-label">WORKSPACE</div>
@@ -147,9 +147,9 @@ export function EstoqueView() {
       <main>
         <header>
           <div>
-            <div className="eyebrow">INVENTÁRIO / VISÃO EXECUTIVA</div>
+            <div className="eyebrow">DASHBOARD / VISÃO EXECUTIVA</div>
             <h1>
-              Estoque <span>em foco.</span>
+              Dashboard <span>Bosso</span>
             </h1>
             <p>Leitura operacional do relatório BeerSales · 15:15:21</p>
           </div>

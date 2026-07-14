@@ -9,8 +9,8 @@ import '~/styles.css'
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      { title: 'Bosso Operations — Estoque & Financeiro' },
-      { name: 'description', content: 'Dashboard operacional Bosso Produções' },
+      { title: 'Bosso Produções — Dashboard' },
+      { name: 'description', content: 'Dashboard operacional Bosso Produções (Estoque, Contas a Receber, Contas a Pagar)' },
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
   }),
