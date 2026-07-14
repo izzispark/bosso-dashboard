@@ -4,6 +4,7 @@ import { MantineProvider } from '@mantine/core'
 import { theme } from '~/styles/mantine-theme'
 import '@mantine/core/styles.css'
 import appCss from '~/styles/app.css?url'
+import '~/styles.css'
 
 export const Route = createRootRoute({
   head: () => ({

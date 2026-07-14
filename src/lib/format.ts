@@ -1,0 +1,2 @@
+export const money = (n: number) =>
+  n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 2 })
