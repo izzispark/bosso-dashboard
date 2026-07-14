@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: estoque-dashboard:v2
+    image: bosso-dashboard:v2
     container_name: bosso-dashboard
     restart: always
     networks:
@@ -14,7 +14,7 @@ services:
       - HOST=0.0.0.0
       - DATA_DIR=/app/data
     volumes:
-      - /root/projects/estoque-dashboard/data:/app/data:ro
+      - /root/projects/bosso-dashboard/data:/app/data:ro
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=komodo_default"
