@@ -1,0 +1,29 @@
+services:
+  estoque-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: estoque-dashboard:latest
+    container_name: estoque-dashboard
+    restart: always
+    networks:
+      - komodo_default
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DATA_DIR=/app/data
+    volumes:
+      - /root/projects/estoque-dashboard/data:/app/data:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=komodo_default"
+      - "traefik.http.routers.estoque-dashboard.rule=Host(`dashboard.bosso.izzispark.cloud`)"
+      - "traefik.http.routers.estoque-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.estoque-dashboard.tls=true"
+      - "traefik.http.routers.estoque-dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.services.estoque-dashboard.loadbalancer.server.port=3000"
+
+networks:
+  komodo_default:
+    external: true
